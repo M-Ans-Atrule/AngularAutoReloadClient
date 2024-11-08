@@ -12,7 +12,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit {
-  title = 'AutoReloadClient';
+  title = 'Auto ReloadClient';
   constructor(
     private swUpdate: SwUpdate,
     private snackBar: MatSnackBar

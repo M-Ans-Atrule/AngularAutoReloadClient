@@ -12,7 +12,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit {
-  title = 'Auto ReloadClient';
+  title = 'Angular App Change Detection';
   constructor(
     private swUpdate: SwUpdate,
     private snackBar: MatSnackBar
@@ -42,7 +42,7 @@ export class AppComponent implements OnInit {
       setInterval(() => {
         this.swUpdate.checkForUpdate();
         console.log('Checking for updates...');
-      }, 60000);
+      }, 30000);
     }
   }
 }

@@ -41,6 +41,7 @@ export class AppComponent implements OnInit {
       // Check periodically for updates
       setInterval(() => {
         this.swUpdate.checkForUpdate();
+        console.log('Checking for updates...');
       }, 60000);
     }
   }

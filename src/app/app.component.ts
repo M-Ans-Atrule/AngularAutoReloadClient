@@ -1,5 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { SwUpdate, VersionReadyEvent } from '@angular/service-worker';
+import { filter } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-root',
@@ -8,6 +11,37 @@ import { RouterOutlet } from '@angular/router';
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'AutoReloadClient';
+  constructor(
+    private swUpdate: SwUpdate,
+    private snackBar: MatSnackBar
+  ) {}
+
+  ngOnInit() {
+    if (this.swUpdate.isEnabled) {
+      this.swUpdate.versionUpdates
+        .pipe(filter((evt): evt is VersionReadyEvent => evt.type === 'VERSION_READY'))
+        .subscribe(() => {
+          const snackBar = this.snackBar.open(
+            'A new version is available!', 
+            'Update now', 
+            {
+              duration: 0, // Won't auto-dismiss
+              horizontalPosition: 'center',
+              verticalPosition: 'bottom',
+            }
+          );
+
+          snackBar.onAction().subscribe(() => {
+            window.location.reload();
+          });
+        });
+
+      // Check periodically for updates
+      setInterval(() => {
+        this.swUpdate.checkForUpdate();
+      }, 60000);
+    }
+  }
 }

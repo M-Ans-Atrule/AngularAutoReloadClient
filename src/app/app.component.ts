@@ -42,7 +42,7 @@ export class AppComponent implements OnInit {
       setInterval(() => {
         this.swUpdate.checkForUpdate();
         console.log('Checking for updates...');
-      }, 30000);
+      }, 1000);
     }
   }
 }
